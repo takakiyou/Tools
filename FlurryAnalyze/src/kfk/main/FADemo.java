@@ -21,8 +21,9 @@ public class FADemo {
 		String endDate = au.getEndDate();
 		String version = au.getVersionName();
 		String interval = au.getInterval();
-		BugRate(container, au, apiKey, starDate, endDate, version, interval);
-		Crash(container, version, interval);
+		String inputDir = au.getInputDir();
+		BugRate(container, au, apiKey, starDate, endDate, version, interval, inputDir);
+		Crash(container, version, interval, inputDir);
 		ExportExcel excel = new ExportExcel();
 		excel.makeBugRate(container, au);
 	}
@@ -36,11 +37,12 @@ public class FADemo {
 	 * @param endDate
 	 * @param version
 	 * @param interval
+	 * @param inputDir
 	 */
 	@SuppressWarnings("unchecked")
 	public void BugRate(String[][] container, ActiveUserBean activeUserBean,
 			String apiKey, String starDate, String endDate, String version,
-			String interval) {
+			String interval, String inputDir) {
 		String flurryApi = "http://api.flurry.com/appMetrics/ActiveUsers?apiAccessCode=QBV2BBZ7HBF3PJXTK97F&apiKey="
 				+ apiKey
 				+ "&startDate="
@@ -48,7 +50,7 @@ public class FADemo {
 				+ "&endDate="
 				+ endDate
 				+ "&versionName=";
-		String csvURL = "/Users/ThomasKe/Downloads/1MobileMarket_" + version
+		String csvURL = inputDir+"1MobileMarket_" + version
 				+ "-[" + interval + "]-crashes.csv";
 		try {
 			HttpRequester request = new HttpRequester();
@@ -119,9 +121,9 @@ public class FADemo {
 	 * @param interval
 	 */
 	@SuppressWarnings("unchecked")
-	public void Crash(String[][] container, String version, String interval) {
+	public void Crash(String[][] container, String version, String interval, String inputDir) {
 		try {
-			String crashDir = "/Users/ThomasKe/Downloads/1MobileMarket_"
+			String crashDir = inputDir+"1MobileMarket_"
 					+ version + "-[" + interval
 					+ "]-topCrashesByStackFingerprint.csv";
 			CrashCategoryParse crashCategory = new CrashCategoryParse();

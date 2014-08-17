@@ -29,7 +29,7 @@ public class AnalyzeUI {
 	JFrame frame;
 	JButton button;
 	JComboBox versionCombo;
-	JTextField apiKey, starDate, endDate, interval;
+	JTextField apiKey, starDate, endDate, interval, inputDir, outputDir;
 
 	public AnalyzeUI() {
 
@@ -38,6 +38,8 @@ public class AnalyzeUI {
 		starDate = new JTextField("2014-08-06", 20);
 		endDate = new JTextField("2014-08-06", 20);
 		interval = new JTextField("2014_08_06-2014_08_07", 20);
+		inputDir = new JTextField("csv的下载路径", 20);
+		outputDir = new JTextField("生成Bug统计的路径", 20);
 
 		JPanel main_panel = new JPanel();	
 		JPanel p_center = new JPanel();
@@ -52,6 +54,10 @@ public class AnalyzeUI {
 		p_center.add(endDate);
 		p_center.add(getLabel("interval"));
 		p_center.add(interval);
+		p_center.add(getLabel("csv输入路径"));
+		p_center.add(inputDir);
+		p_center.add(getLabel("Bug生成路径"));
+		p_center.add(outputDir);
 		main_panel.add(getLabel("请按照格式填写，确认无误后点击 '" + button.getLabel() + "' :)"),BorderLayout.NORTH);
 		main_panel.add(p_center,BorderLayout.CENTER);
 		main_panel.add(button, BorderLayout.NORTH);
@@ -116,6 +122,8 @@ public class AnalyzeUI {
 				bean.setEndDate(endDate.getText());
 				bean.setVersionName(versionCombo.getSelectedItem().toString());
 				bean.setInterval(interval.getText());
+				bean.setInputDir(inputDir.getText());
+				bean.setOutputDir(outputDir.getText());
 				FADemo faDemo = new FADemo(bean);
 				System.out.println("FADemo:Now, Let's go !!!");
 			}

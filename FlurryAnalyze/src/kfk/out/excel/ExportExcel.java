@@ -16,7 +16,7 @@ public class ExportExcel {
 
 	public void makeBugRate(String[][] file, ActiveUserBean au) {
 		try {
-			File excel = new File("/Users/ThomasKe/Documents/1mobile/BugDaily/Bug_(" + au.getVersionName() + "_" + au.getStartDate() + ").xls");
+			File excel = new File(au.getOutputDir()+"Bug_(" + au.getVersionName() + "_" + au.getStartDate() + ").xls");
 			workbook = Workbook.createWorkbook(excel);
 			sheet_1 = workbook.createSheet("RugRate", 0);
 			sheet_2 = workbook.createSheet("Crash", 1);
