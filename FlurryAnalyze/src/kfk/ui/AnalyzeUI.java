@@ -27,7 +27,7 @@ public class AnalyzeUI {
 	}
 
 	JFrame frame;
-	JButton button;
+	JButton button, bOpen, bSave;
 	JComboBox versionCombo;
 	JTextField apiKey, starDate, endDate, interval, inputDir, outputDir;
 
@@ -40,6 +40,8 @@ public class AnalyzeUI {
 		interval = new JTextField("2014_08_06-2014_08_07", 20);
 		inputDir = new JTextField("csv的下载路径", 20);
 		outputDir = new JTextField("生成Bug统计的路径", 20);
+		bOpen = new JButton("csv");
+		bSave = new JButton("save");
 
 		JPanel main_panel = new JPanel();	
 		JPanel p_center = new JPanel();
@@ -60,16 +62,21 @@ public class AnalyzeUI {
 		p_center.add(outputDir);
 		main_panel.add(getLabel("请按照格式填写，确认无误后点击 '" + button.getLabel() + "' :)"),BorderLayout.NORTH);
 		main_panel.add(p_center,BorderLayout.CENTER);
-		main_panel.add(button, BorderLayout.NORTH);
+		main_panel.add(bOpen, BorderLayout.SOUTH);
+		main_panel.add(bSave, BorderLayout.SOUTH);
+		main_panel.add(button, BorderLayout.SOUTH);
 
 		frame = new JFrame("FLurry Analyze");
 		frame.setContentPane(main_panel);
-		frame.setSize(320, 480);
+		frame.setSize(300, 400);
 		frame.setResizable(true);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+		//按钮和下来列表添加监听
 		ActionLisen ln = new ActionLisen();
 		button.addActionListener(ln);
+		bOpen.addActionListener(ln);
+		bSave.addActionListener(ln);
 		versionCombo.addActionListener(ln);
 	}
 
@@ -114,6 +121,16 @@ public class AnalyzeUI {
 					apiKey.setText("84SSPWJ5JY7NYG2T8F79");
 				if (versionCombo.getSelectedItem().equals("4.0_for_Web"))
 					apiKey.setText("37N3P96QT7VK3MJ8VZG6");
+			}
+			if(e.getSource() == bOpen) {
+				AcquireFileDir dir = new AcquireFileDir();
+				dir.openDialog(0);
+				inputDir.setText(dir.getDir());
+			}
+			if(e.getSource() == bSave) {
+				AcquireFileDir dir = new AcquireFileDir();
+				dir.openDialog(1);
+				outputDir.setText(dir.getDir());
 			}
 			if (e.getSource() == button) {
 				ActiveUserBean bean = new ActiveUserBean();
