@@ -1,6 +1,7 @@
 package kfk.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -47,13 +48,22 @@ public class AnalyzeUI {
 		outputDir = new JTextField("生成Bug统计的路径", 20);
 		bOpen = new JButton("csv");
 		bSave = new JButton("Bug");
-
+		versionCombo = getVersionCombo();
+		JLabel version = new JLabel("version");
+		
 		JPanel p_center = new JPanel();
-		p_center.setAlignmentY(0);
-		p_center.setLayout(new BoxLayout(p_center,BoxLayout.PAGE_AXIS));
-		p_center.add(Box.createVerticalGlue());
-		p_center.add(getLabel("version"));
-		p_center.add(getVersionCombo());
+		p_center.setLayout(new BoxLayout(p_center,BoxLayout.Y_AXIS));
+		//靠左布局
+		versionCombo.setAlignmentX(JPanel.LEFT_ALIGNMENT);
+		apiKey.setAlignmentX(JPanel.LEFT_ALIGNMENT);
+		starDate.setAlignmentX(JPanel.LEFT_ALIGNMENT);
+		endDate.setAlignmentX(JPanel.LEFT_ALIGNMENT);
+		interval.setAlignmentX(JPanel.LEFT_ALIGNMENT);
+		inputDir.setAlignmentX(JPanel.LEFT_ALIGNMENT);
+		outputDir.setAlignmentX(JPanel.LEFT_ALIGNMENT);
+		//添加零件
+		p_center.add(version);
+		p_center.add(versionCombo);
 		p_center.add(getLabel("apiKey"));
 		p_center.add(apiKey);
 		p_center.add(getLabel("starDate"));
@@ -75,12 +85,12 @@ public class AnalyzeUI {
 		
 		JPanel contentPane = new JPanel();
 		contentPane.add(getLabel("请按照格式填写，确认无误后点击'analyze':)"), BorderLayout.PAGE_START);
-		contentPane.add(p_center,BorderLayout.CENTER);
+		contentPane.add(p_center, BorderLayout.CENTER);
 		contentPane.add(button_panel,BorderLayout.PAGE_END);
 
 		frame = new JFrame("FLurry Analyze");
 		frame.setContentPane(contentPane);
-		frame.setSize(300, 400);
+		frame.setSize(320, 480);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
