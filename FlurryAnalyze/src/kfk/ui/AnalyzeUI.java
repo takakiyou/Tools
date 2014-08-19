@@ -1,11 +1,16 @@
 package kfk.ui;
 
 import java.awt.BorderLayout;
+import java.awt.ComponentOrientation;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -41,11 +46,12 @@ public class AnalyzeUI {
 		inputDir = new JTextField("csv的下载路径", 20);
 		outputDir = new JTextField("生成Bug统计的路径", 20);
 		bOpen = new JButton("csv");
-		bSave = new JButton("save");
+		bSave = new JButton("Bug");
 
-		JPanel main_panel = new JPanel();	
 		JPanel p_center = new JPanel();
-		p_center.setLayout(new BoxLayout(p_center,BoxLayout.Y_AXIS));
+		p_center.setAlignmentY(0);
+		p_center.setLayout(new BoxLayout(p_center,BoxLayout.PAGE_AXIS));
+		p_center.add(Box.createVerticalGlue());
 		p_center.add(getLabel("version"));
 		p_center.add(getVersionCombo());
 		p_center.add(getLabel("apiKey"));
@@ -60,16 +66,22 @@ public class AnalyzeUI {
 		p_center.add(inputDir);
 		p_center.add(getLabel("Bug生成路径"));
 		p_center.add(outputDir);
-		main_panel.add(getLabel("请按照格式填写，确认无误后点击 '" + button.getLabel() + "' :)"),BorderLayout.NORTH);
-		main_panel.add(p_center,BorderLayout.CENTER);
-		main_panel.add(bOpen, BorderLayout.SOUTH);
-		main_panel.add(bSave, BorderLayout.SOUTH);
-		main_panel.add(button, BorderLayout.SOUTH);
+		
+		JPanel button_panel = new JPanel();
+		button_panel.setLayout(new BoxLayout(button_panel, BoxLayout.LINE_AXIS));
+		button_panel.add(bOpen);
+		button_panel.add(bSave);
+		button_panel.add(button);
+		
+		JPanel contentPane = new JPanel();
+		contentPane.add(getLabel("请按照格式填写，确认无误后点击'analyze':)"), BorderLayout.PAGE_START);
+		contentPane.add(p_center,BorderLayout.CENTER);
+		contentPane.add(button_panel,BorderLayout.PAGE_END);
 
 		frame = new JFrame("FLurry Analyze");
-		frame.setContentPane(main_panel);
+		frame.setContentPane(contentPane);
 		frame.setSize(300, 400);
-		frame.setResizable(true);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		//按钮和下来列表添加监听
